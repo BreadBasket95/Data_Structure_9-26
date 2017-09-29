@@ -43,7 +43,7 @@ void Queue::destroy_Queue() {
 // the values to create a new node and adds the node to the rear of the queue.
 // NOTE: all newly created node should have their next pointer set to NULL
 void Queue::enqueue(const string &item, const int &precedence) {
- temp = new Node();
+ Node *temp = new Node();
  temp->data = item;
  temp->precedence = precedence;
  temp->next = nullptr;
@@ -62,7 +62,15 @@ void Queue::enqueue(const string &item, const int &precedence) {
 // been created using dynamic memory allocation in your convert or compute
 // method or a node returned from the pop() method of your Stack class.
 void Queue::enqueue(Node *node) {
+  if(!front){
+    rear = node;
+    front = node;
+  }
 
+  else{
+    rear->next = node;
+    rear = rear->next;
+ }
 
 }
 
@@ -70,6 +78,12 @@ void Queue::enqueue(Node *node) {
 // to that node.  During this process, the method should update the front pointer
 // to point to the new front node resulting from the removal.
 Node* Queue::dequeue() {
-
-
+  Node *front_node;
+  if(front) {
+    front_node = front;
+    front = front->next;
+  }
+  front_node->next = nullptr;
+  delete front_node;
+  return front_node;
 }
