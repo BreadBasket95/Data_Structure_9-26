@@ -1,11 +1,11 @@
 /*******************************************************************************
-* Queue.cpp 
+* Queue.cpp
 *
 * author: Rikk Anderson
 * date created: 10/12/2014
 * last updated: 10/12/2014
 *
-* This files defines the method of the Queue class used for infix to postfix 
+* This files defines the method of the Queue class used for infix to postfix
 * conversion
 *
 *******************************************************************************/
@@ -35,7 +35,7 @@ void Queue::destroy_Queue() {
 
 
 /****************************
-* methods you must implement 
+* methods you must implement
 ****************************/
 
 
@@ -43,13 +43,23 @@ void Queue::destroy_Queue() {
 // the values to create a new node and adds the node to the rear of the queue.
 // NOTE: all newly created node should have their next pointer set to NULL
 void Queue::enqueue(const string &item, const int &precedence) {
- 
+ temp = new Node();
+ temp->data = item;
+ temp->precedence = precedence;
+ temp->next = nullptr;
+ if(!front){
+   rear = temp;
+   front = temp;
+ }
 
+ else{
+   rear->next = temp
+   rear = rear->next;
 }
 
-// receives a pointer to a node object and uses the pointer to add the 
-// node to the rear of the queue.  The received node object should have 
-// been created using dynamic memory allocation in your convert or compute 
+// receives a pointer to a node object and uses the pointer to add the
+// node to the rear of the queue.  The received node object should have
+// been created using dynamic memory allocation in your convert or compute
 // method or a node returned from the pop() method of your Stack class.
 void Queue::enqueue(Node *node) {
 
