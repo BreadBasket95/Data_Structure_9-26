@@ -1,11 +1,11 @@
 /*******************************************************************************
-* Stack.cpp 
+* Stack.cpp
 *
 * author: Rikk Anderson
 * date created: 10/12/2014
 * last updated: 10/12/2014
 *
-* This files defines the method of the Stack class used for infix to postfix 
+* This files defines the method of the Stack class used for infix to postfix
 * conversion
 *
 *******************************************************************************/
@@ -40,32 +40,48 @@ void Stack::destroy_Stack() {
 // the values to create a new node and adds the node to the top of the stack.
 // NOTE: all newly created node should have their next pointer set to NULL
 void Stack::push(const string &item, const int &precedence) {
-
-
+Node *temp = new Node();      // dynamically allocating a node struct object "temp" that will be added to the queue
+temp->precedence = precedence; // assigning values to the node object
+temp->data = item;             // assigning values to the node object
+if(!tos){       // this function checks if the top of the stack exists, and makes the new node the top if it doesn't
+ tos = temp;
+ temp->next = nullptr;
+}
+else{           // if the top of the stack already exists, that is if tos already points to a node,
+                // then this function adds another node to the top of stack
+  temp->next = tos;
+  tos = temp;
+}
 }
 
-// receives a pointer to a node object and uses the pointer to add the 
-// node to the top of the stack.  The received node object should have 
-// been created using dynamic memory allocation in your convert or compute 
+// receives a pointer to a node object and uses the pointer to add the
+// node to the top of the stack.  The received node object should have
+// been created using dynamic memory allocation in your convert or compute
 // method or a node returned from the dequeue() method of your Queue class.
 void Stack::push(Node *node) {
-
+  if(!tos){         // checking if the top of the stack exists.
+   tos = node;
+   node->next = nullptr;
+  }
+  else{
+    node->next = tos;
+    tos = node;
 
 }
 
 
 
-// This method removes the top of the stack and returns the pointer to that node.  
-// During this process, the method should update the tos pointer to point to the 
+// This method removes the top of the stack and returns the pointer to that node.
+// During this process, the method should update the tos pointer to point to the
 // new top of stack node resulting from the removal.
 Node* Stack::pop() {
-
+//pop and enqueue operate the same
 
 }
 
-// This method returns a pointer to the top of the stack.  In contrast to pop(), 
+// This method returns a pointer to the top of the stack.  In contrast to pop(),
 // this method DOES NOT remove the top of stack.  The use of const here prevents
-// the user from modifying the pointer (and the object) returned from this method.  
+// the user from modifying the pointer (and the object) returned from this method.
 Node* Stack::top() const {
 
 
