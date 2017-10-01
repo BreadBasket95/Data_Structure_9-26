@@ -10,6 +10,7 @@
 *
 *******************************************************************************/
 #include "Queue.h"
+#include "Node.h"
 
 Queue::Queue() {
   front = NULL;   // creation of a null pointer, can also be set to 0 or nullptr
@@ -53,8 +54,9 @@ void Queue::enqueue(const string &item, const int &precedence) {
  }
 
  else{
-   rear->next = temp
+   rear->next = temp;
    rear = rear->next;
+ }
 }
 
 // receives a pointer to a node object and uses the pointer to add the
@@ -71,7 +73,6 @@ void Queue::enqueue(Node *node) {
     rear->next = node;
     rear = rear->next;
  }
-
 }
 
 // This method removes the front node from the queue and returns the pointer
