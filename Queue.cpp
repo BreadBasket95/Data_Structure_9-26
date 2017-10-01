@@ -84,6 +84,5 @@ Node* Queue::dequeue() {
     front = front->next;
   }
   front_node->next = nullptr;
-  delete front_node;
   return front_node;
 }
