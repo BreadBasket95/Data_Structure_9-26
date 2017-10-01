@@ -47,7 +47,7 @@ void Queue::enqueue(const string &item, const int &precedence) {
  Node *temp = new Node();
  temp->data = item;
  temp->precedence = precedence;
- temp->next = nullptr;
+ temp->next = NULL;
  if(!front){
    rear = temp;
    front = temp;
@@ -84,6 +84,6 @@ Node* Queue::dequeue() {
     front_node = front;
     front = front->next;
   }
-  front_node->next = nullptr;
+  front_node->next = NULL;
   return front_node;
 }
