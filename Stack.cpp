@@ -12,7 +12,7 @@
 #include "Stack.h"
 
 Stack::Stack() {
-  tos = NULL; // creation of a null pointer, can also be set to 0 or nullptr
+  tos = NULL; // creation of a null pointer, can also be set to 0 or NULL
 };
 
 Stack::~Stack() {
@@ -45,13 +45,13 @@ temp->precedence = precedence; // assigning values to the node object
 temp->data = item;             // assigning values to the node object
 if(!tos){       // this function checks if the top of the stack exists, and makes the new node the top if it doesn't
  tos = temp;
- temp->next = nullptr;
+ temp->next = NULL;
 }
 else{           // if the top of the stack already exists, that is if tos already points to a node,
                 // then this function adds another node to the top of stack
   temp->next = tos;
   tos = temp;
-}
+  }
 }
 
 // receives a pointer to a node object and uses the pointer to add the
@@ -59,14 +59,14 @@ else{           // if the top of the stack already exists, that is if tos alread
 // been created using dynamic memory allocation in your convert or compute
 // method or a node returned from the dequeue() method of your Queue class.
 void Stack::push(Node *node) {
-  if(!tos){         // checking if the top of the stack exists.
-   tos = node;
-   node->next = nullptr;
-  }
-  else{
+  if(tos){         // checking if the top of the stack exists.
     node->next = tos;
     tos = node;
-
+  }
+  else{
+    tos = node;
+    node->next = NULL;
+  }
 }
 
 
@@ -75,14 +75,24 @@ void Stack::push(Node *node) {
 // During this process, the method should update the tos pointer to point to the
 // new top of stack node resulting from the removal.
 Node* Stack::pop() {
-//pop and enqueue operate the same
-
+  Node *front_node;
+  if(tos) {
+    front_node = tos; // If the stack exists, move the top of the stack to the next element
+    tos = tos->next;  // Then erase the previous top of the stack from the queue structure, but retain a pointer to it.
+    front_node->next = NULL;
+  }
+  else return NULL;
+  
+  front_node->next = NULL;
+  return front_node;
 }
+
 
 // This method returns a pointer to the top of the stack.  In contrast to pop(),
 // this method DOES NOT remove the top of stack.  The use of const here prevents
 // the user from modifying the pointer (and the object) returned from this method.
 Node* Stack::top() const {
-
-
+  if(tos)
+    return tos;   // if the stack exists, return it. Else, return null.
+  else return NULL;
 }
