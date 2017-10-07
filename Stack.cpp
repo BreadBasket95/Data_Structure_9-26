@@ -82,7 +82,7 @@ Node* Stack::pop() {
     front_node->next = NULL;
   }
   else return NULL;
-  
+
   front_node->next = NULL;
   return front_node;
 }

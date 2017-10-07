@@ -1,12 +1,12 @@
 /*******************************************************************************
-* Node.h 
+* Node.h
 *
 * author: Rikk Anderson
 * date created: 9/27/2017
 * last updated: 9/27/2017
 *
 * This file provides a Node struct
-* 
+*
 *******************************************************************************/
 #ifndef NODE_H
 #define NODE_H
