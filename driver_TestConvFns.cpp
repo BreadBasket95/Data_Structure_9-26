@@ -12,6 +12,7 @@
 #include <string>
 #include <stdio.h>
 #include <ctype.h>
+#include <map>
 
 #include "Node.h"
 #include "Stack.h"
@@ -51,48 +52,44 @@ void test() {
 
 string convert_to_pf(string eq)
 {
+  map <string, int> dictionary;
+  dictionary["*" "/" "%"] = 2;
+  dictionary["+" "-"] = 1;
+  dictionary["(" "["] = 0;
+
+  /*precedence =2, for *, /, and %
+precedence =1, for + and –
+precedence =0, for ( and [ */
+
   Stack stackone; // The stack object that will help sort the string tokens
   Queue queueone; // The queue object that will store the final expression
 
   for(int count = 0; count < eq.length(); count++){
-
     if(isdigit(eq[count])){     // checking if the token is a numerical digit
       queueone.enqueue(eq.substr(count, 1), NULL); // If the token is a numerical digit, enqueue it with a precedence value of null
   }
-    else if(eq[count] == '(') {  // If the token is a left parenthesis, push it to the stack
+    else if(eq.substr(count, 1) == "(") {  // If the token is a left parenthesis, push it to the stack
       stackone.push(eq.substr(count, 1), 0);
     }
     else if(ispunct(eq[count])){ // If the token is an operator...
-      while(((stackone.top())&&(stackone.top()->precedence== 2))){ // And its precedence is greater than or equal to the top item of the stack...
+      // the code below checks if the top item of the stack exists, and if it is an operator
+      // at the same time by checking the precedence value of the top object, because
+      // it would return null if it is empty, or if it is a non-operator as specified on line 69
+      while((stackone.top())&&(stackone.top()->precedence > 0) && stackone.top()->precedence >= dictionary[eq.substr(count, 1)]){ // And its precedence is greater than or equal to the top item of the stack...
         queueone.enqueue(stackone.pop());    // pop it from the stack and enqueue it.
-        stackone.push(eq.substr(count, 1) )
       }
-
+      stackone.push(eq.substr(count, 1), dictionary[eq.substr(count, 1)]);
+    }
+    else if(stackone.top()->data != ("(")){
+        queueone.enqueue(stackone.pop());
+        }
+        if(stackone.top()->data == "("){
+          stackone.pop();
+        }
+      }
+    while(stackone.top()){
+      queueone.enqueue(stackone.pop());
     }
 
-/*  create an empty stack
-  create an empty queue to represent the postfix expression
-  for each token in the expression:
-  if token is a number:
-  append it to the postfix expression
-  elif token is a left parenthesis:
-  push it to the stack
-
-  elif token is an operator:
-  while (stack is not empty and the top stack item is an operator
-  with precedence greater than or equal to token):
-  pop and append the operator
-  to the postfix expression
-  push the token onto the stack
-
-  else token must be a right parenthesis
-  while(the top item on the stack is not a left parenthesis):
-  pop item from the stack and append it to the postfix expression
-  pop the left parenthesis while the stack is not empty
-  pop an item from the stack and append it to the postfix expression */
-  //string eq
-  //Queue queue_one;
-  //Stack stack_one;
-}
 return 0;
 }
