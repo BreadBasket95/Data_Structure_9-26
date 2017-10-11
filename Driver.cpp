@@ -41,11 +41,11 @@ void test() {
 	cout << convert_to_pf("2+2*7") << endl;
 	cout << convert_to_pf("2+2*7%4") << endl;
 	cout << convert_to_pf("2*2-7/4") << endl;
-	/*
+	
 	cout << convert_to_pf("2*(2-7)/4") << endl;
 	cout << convert_to_pf("2*(2-7)/4&&8") << endl;
-	//cout << convert_to_pf("2*4==(2-7)/4") << endl;
-
+	cout << convert_to_pf("2*4==(2-7)/4") << endl;
+	/*
 	// invalid equation check
 	cout << convert_to_pf("2*(2-7]/4") << endl;
 	cout << convert_to_pf("[2*(2-7)/4") << endl;
@@ -66,8 +66,15 @@ string convert_to_pf(string eq)
 
 	for (unsigned int index = 0; index < eq.length(); index++)
 	{
+		string character;
 		bool is_digit = isdigit(eq[index]);
-		string character = eq.substr(index, 1);
+		if (get_precedence(eq.substr(index, 2)) > 0) {
+			character = eq.substr(index, 2);
+		}
+		else {
+			character = eq.substr(index, 1);
+		}
+		
 		int precedence;
 
 		if (!is_digit) {
@@ -91,7 +98,7 @@ string convert_to_pf(string eq)
 			s.push(character, precedence);
 		}
 
-		else if (eq.substr(index, 1) == ")" ){
+		else if (character == ")" ){
 			while (s.top()->data != "(")
 			{
 				q.enqueue(s.pop());
