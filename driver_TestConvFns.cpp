@@ -22,12 +22,17 @@
 
 using namespace std;
 
-string convert_to_pf(string eq);  // write the body of this method below test()
+int get_precedence(string token);
+string convert_to_pf(string eq);
+string transform(Queue q);
+              // write the body of this method below test()
 void test();  // I provided this method for you to test your covert fucniton but
               // you should do a more thorough test.
 
 int main() {
   test();
+  cout << "end";
+  return 0;
 }
 
 void test() {
@@ -49,47 +54,102 @@ void test() {
   cout << "******************************************\n\n";
 
 }
-
 string convert_to_pf(string eq)
 {
-  map <string, int> dictionary;
-  dictionary["*" "/" "%"] = 2;
-  dictionary["+" "-"] = 1;
-  dictionary["(" "["] = 0;
 
-  /*precedence =2, for *, /, and %
-precedence =1, for + and –
-precedence =0, for ( and [ */
+/*  map <string, int> dictionary;
+  dictionary["*"] = 6; dictionary["/"] = 6; dictionary["%"] = 6;
+  dictionary["+"] = 5; dictionary["-"] = 5;
+  dictionary["<"] = 4; dictionary[">"] = 4;
+  dictionary["=="] = 3; dictionary["!="] = 3;
+  dictionary["&&"] = 2;
+  dictionary["||"] = 1;
+  dictionary["("] = 0; dictionary["["] = 0; dictionary[")"] = 0; dictionary["]"] = 0;
+  dictionary["!"] = 10; dictionary["#"] = 10; dictionary["\""] = 10; dictionary["$"] = 10; dictionary["\'"] = 10; dictionary[","] = 10; dictionary["."] = 10; dictionary[":"] = 10;
+  dictionary[";"] = 10; dictionary["?"] = 10; dictionary["@"] = 10; dictionary["`"] = 10; dictionary["~"]= 10; */
+
 
   Stack stackone; // The stack object that will help sort the string tokens
   Queue queueone; // The queue object that will store the final expression
 
-  for(int count = 0; count < eq.length(); count++){
-    if(isdigit(eq[count])){     // checking if the token is a numerical digit
-      queueone.enqueue(eq.substr(count, 1), NULL); // If the token is a numerical digit, enqueue it with a precedence value of null
-  }
-    else if(eq.substr(count, 1) == "(") {  // If the token is a left parenthesis, push it to the stack
-      stackone.push(eq.substr(count, 1), 0);
-    }
-    else if(ispunct(eq[count])){ // If the token is an operator...
-      // the code below checks if the top item of the stack exists, and if it is an operator
-      // at the same time by checking the precedence value of the top object, because
-      // it would return null if it is empty, or if it is a non-operator as specified on line 69
-      while((stackone.top())&&(stackone.top()->precedence > 0) && stackone.top()->precedence >= dictionary[eq.substr(count, 1)]){ // And its precedence is greater than or equal to the top item of the stack...
-        queueone.enqueue(stackone.pop());    // pop it from the stack and enqueue it.
-      }
-      stackone.push(eq.substr(count, 1), dictionary[eq.substr(count, 1)]);
-    }
-    else if(stackone.top()->data != ("(")){
-        queueone.enqueue(stackone.pop());
-        }
-        if(stackone.top()->data == "("){
-          stackone.pop();
-        }
-      }
-    while(stackone.top()){
-      queueone.enqueue(stackone.pop());
-    }
 
-return 0;
+  for(unsigned int count = 0; count < eq.length(); count++)
+  {
+    if(isdigit(eq[count])) // checking if the token is a numerical digit
+    {
+    //  cout << "digit ";
+      queueone.enqueue(eq.substr(count, 1), -1); // If the token is a numerical digit, enqueue it with a precedence value of -1
+
+    }
+    else if(eq[count] == '(' || eq[count] == '[') // If the token is a left parenthesis, push it to the stack
+    {
+    //  cout << "left parenthesis";
+      //cout << eq.substr(count, 1);
+      stackone.push(eq.substr(count, 1), 0);
+//      cout << stackone.top()->precedence;
+//      cout << stackone.top()->data;
+    }
+    else if(get_precedence(eq.substr(count, 1)) >= 1 ) // == "*" || eq.substr(count, 1) == "+" || eq.substr(count, 1) == "-" || eq.substr(count, 1) == "%" || eq.substr(count, 1) == "/" || eq.substr(count, 1) == ">" || eq.substr(count, 1) == "<") // || eq.substr(count, 1) == "*" || eq.substr(count, 1) == "*" || ) // If the token is an operator...
+    {
+//      cout << stackone.top()->precedence;
+//      cout << stackone.top()->data;
+
+      //cout << "working ";
+    //  cout << stackone.top()->data;
+      //cout << stackone.top()->precedence;
+        //the code below checks if the top item of the staprecedenceck exists, and if it is an operator
+      while(stackone.top() && stackone.top()->precedence >= get_precedence(eq.substr(count, 1)))// And its precedence is greater than or equal to the top item of the stack...
+        {
+            cout << "top of stack has larger precedence than token ";
+      //    cout << eq.substr(count, 1);
+            queueone.enqueue(stackone.pop());    // pop it from the stack and enqueue it.
+        }
+      stackone.push(eq.substr(count, 1), get_precedence(eq.substr(count, 1)));
+    }
+else if(eq[count] == ')')
+{
+  //cout << ")";
+   while(stackone.top() && stackone.top()->data != "(")
+   {
+     queueone.enqueue(stackone.pop());
+    }
+    stackone.pop();
+  }
+while(stackone.top())
+{
+  queueone.enqueue(stackone.pop());
+}
+
+}
+  return "";
+}
+
+int get_precedence(string token){
+  if(token == ("*") || token == "/" || token == "%"){
+    return 6;
+  }
+  if(token == "+" || token == "-"){
+    return 5;
+  }
+  if(token == "<" || token == ">"){
+    return 4;
+  }
+  if(token == "==" || token == "!="){
+    return 3;
+  }
+  if(token == "&&"){
+    return 2;
+  }
+  if(token == "||"){
+    return 1;
+  }
+  if(token == "(" || token == "["){
+    return 0;
+  }
+  else return -1;
+}
+
+string transform(Queue q){
+
+    return "";
 }
