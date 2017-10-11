@@ -23,7 +23,9 @@ using namespace std;
 
 int get_precedence(string token);
 string convert_to_pf(string eq);
-// write the body of this method below test()
+string convert_output(int size, Queue q);
+
+			  // write the body of this method below test()
 void test();  // I provided this method for you to test your covert fucniton but
 			  // you should do a more thorough test.
 
@@ -116,17 +118,9 @@ string convert_to_pf(string eq)
 	}
 
 	cout << "result: ";
-	Node* NextNode;
-	while(q_size != 0) {
-		NextNode = q.dequeue();
-		cout << NextNode->data;
-		q_size--;
-	}
-
-	return "";
-
+	return convert_output(q_size, q);
 }
-
+ 
 
 int get_precedence(string token) {
 
@@ -154,4 +148,15 @@ int get_precedence(string token) {
 	else return -1;
 }
 
+string convert_output(int q_size, Queue q)
+{
+	string result;
+	Node* NextNode;
+	while (q_size != 0) {
+		NextNode = q.dequeue();
+		result.append(NextNode->data);
+		q_size--;
+	}
+	return result;
+}
 
