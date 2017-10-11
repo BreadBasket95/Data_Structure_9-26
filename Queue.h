@@ -15,23 +15,23 @@
 #include "Node.h"
 
 class Queue {
-  private:
-    Node* front;  // the head pointer of the linked list-based queue
-    Node* rear;   // the tail pointer of the linked list-based queue
+private:
+	Node* front;  // the head pointer of the linked list-based queue
+	Node* rear;   // the tail pointer of the linked list-based queue
 
-  public:
-    Queue();    // the constructor
-    ~Queue();   // the destructor
+public:
+	Queue();    // the constructor
+	~Queue();   // the destructor
 
-    void destroy_Queue(); // removes all elements from the queue
+	void destroy_Queue(); // removes all elements from the queue
 
-    // *** methods you must implement
-    // the item and precedence parameters are made const to
-    // prevent and accidental modification of the parameters
-    void enqueue(const string &item, const int &precedence);
-    void enqueue(Node *node);
+						  // *** methods you must implement
+						  // the item and precedence parameters are made const to
+						  // prevent and accidental modification of the parameters
+	void enqueue(const string &item, const int &precedence);
+	void enqueue(Node *node);
 
-    Node* dequeue();  // removes and returns a front node from the queue
+	Node* dequeue();  // removes and returns a front node from the queue
 
 };
 

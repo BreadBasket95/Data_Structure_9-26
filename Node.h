@@ -14,9 +14,9 @@
 using std::string;
 
 struct Node {
-  string data;    // stores an operand of operator
-  int precedence; // store precedence is data is an operator
-  Node *next;     // a pointer to the next node
+	string data;    // stores an operand of operator
+	int precedence; // store precedence is data is an operator
+	Node *next;     // a pointer to the next node
 };
 
 #endif
